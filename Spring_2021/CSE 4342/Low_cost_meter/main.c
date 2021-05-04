@@ -31,9 +31,9 @@
 #include "terminal.h"
 
 
-#define BUFF_LENGTH 100
+#define BUFF_LENGTH 200
 
-//LED for testing purposes
+
 
 
 
@@ -44,12 +44,14 @@ extern char getcUart0();
 extern void getsUart0(INPUT_LINE* data);
 extern void parseFields(INPUT_LINE* data);
 
+//LED for testing purposes
 
+#define GREEN_LED PORTF,3
+#define RED_LED PORTF,1
 
 //-----------------------------------------------------------------------------
 // Main
 //-----------------------------------------------------------------------------
-
 
 int main(void){
 
@@ -74,50 +76,40 @@ int main(void){
             putsUart0("\t\r\nMeasuring Resistance:\r\n");
             uint32_t temp = measRes();
             char buff[BUFF_LENGTH];
-            putsUart0("Resistor: ");
-            sprintf(buff, "%d", temp);
+            sprintf(buff,"Resistor: %d ohms\r\n",temp);
             putsUart0(buff);
-            putsUart0(" ohms\r\n");
         }
 
         else if(strCmp(cmd, "capacitance")){
             putsUart0("\t\r\nMeasuring Capacitance:\r\n");
             uint32_t temp = measCap();
             char buff[BUFF_LENGTH];
-            putsUart0("Capacitor: ");
-            sprintf(buff, "%d", temp);
+            sprintf(buff, "Capacitor: %d microfarads\r\n", temp);
             putsUart0(buff);
-            putsUart0(" microfarads\r\n");
         }
 
         else if(strCmp(cmd, "inductance")){
             putsUart0("\t\r\nMeasuring Inductance:\r\n");
             uint32_t temp = measInd();
             char buff[BUFF_LENGTH];
-            putsUart0("Inductor: ");
-            sprintf(buff, "%d", temp);
+            sprintf(buff, "Inductor: %d microhenries\r\n", temp);
             putsUart0(buff);
-            putsUart0(" microhenries\r\n");
         }
 
         else if(strCmp(cmd, "esr")){
             putsUart0("\t\r\nMeasuring ESR:\r\n");
             float temp = measESR();
             char buff[BUFF_LENGTH];
-            putsUart0("ESR: ");
-            sprintf(buff, "%.2f", temp);
+            sprintf(buff, "ESR: %.2f ohms\r\n", temp);
             putsUart0(buff);
-            putsUart0(" ohms\r\n");
         }
 
         else if(strCmp(cmd, "voltage")){
             putsUart0("\t\r\nMeasuring Voltage:\r\n");
             float temp = measVoltage();
             char buff[BUFF_LENGTH];
-            putsUart0("Voltage: ");
-            sprintf(buff, "%.2f", temp);
+            sprintf(buff, "Voltage: %.2f volts\r\n", temp);
             putsUart0(buff);
-            putsUart0(" volts\r\n");
         }
 
         else if(strCmp(cmd, "auto")){
@@ -142,7 +134,9 @@ int main(void){
             waitMicrosecond(10000);
             resetSys();
         }
-
+        else if(strCmp(cmd, '\n') || strCmp(cmd, '\r')){
+            putsUart0("\t\r\n\r\n");
+        }
         else{
             putsUart0("\t\r\nInvalid Command:\r\n");
         }

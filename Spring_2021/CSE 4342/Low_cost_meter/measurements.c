@@ -50,8 +50,9 @@
 //Constants
 
 #define VREF 2.469
-#define CAPS_CONST .000000186
-#define RES_CONST 57
+#define CAPS_CONST .000000170
+#define RES_CONST 61
+#define IND_CONST 2.4
 #define BUFF_LENGTH 100
 
 
@@ -118,12 +119,12 @@ void groundPins(){
 
 
 //returns the voltage across the DUT2 pin
-float measVoltage(){
-    uint32_t raw = readAdc0Ss3();
-    return ((raw/4096)*3.3);
+double measVoltage(){
+    double raw = readAdc0Ss3();
+    return ((double) (raw/4096)*3.3);
 }
 
-float measESR(){
+double measESR(){
 
     //discharge pins
     groundPins();
@@ -131,12 +132,11 @@ float measESR(){
     setPinValue(LOWSIDE, 1);
     waitMicrosecond(10e5);
 
-    float voltage = 0;
+    double voltage = 0;
     voltage = measVoltage(); //measure voltage
 
     //calculate the resistance from voltage divider equation
-    float res = 0;
-    res = ((3.3*33 - voltage *33)/voltage);
+    double res = ((3.3*33 - voltage *33)/voltage); //.4 is a magic number to try???
     groundPins();
     setPinValue(GREEN_LED, 1);
     return res;
@@ -162,12 +162,19 @@ uint32_t measRes(){
 
 
     //blocks until the voltage = vref
-    while (COMP_ACSTAT0_R == 0X00);
+    while (COMP_ACSTAT0_R == 0X00){
+        if(WTIMER1_TAV_R > 0x31ABA855){
+            WTIMER1_CTL_R &= ~TIMER_CTL_TAEN;
+            groundPins();
+            setPinValue(RED_LED, 1);
+            return(0); //indicates failure
+        }
+    }
 
     //Turn off counter and return value
     WTIMER1_CTL_R &= ~TIMER_CTL_TAEN;
     groundPins();
-    uint32_t temp = (WTIMER1_TAV_R/RES_CONST) + 1;
+    uint32_t temp = (WTIMER1_TAV_R/RES_CONST) - 5;
     setPinValue(GREEN_LED, 1);
     return(temp);
 }
@@ -204,6 +211,7 @@ uint32_t measCap(){
     //Turn off counter and return value
     WTIMER1_CTL_R &= ~TIMER_CTL_TAEN;
     groundPins();
+    //return (WTIMER1_TAV_R);
     uint32_t temp = WTIMER1_TAV_R * CAPS_CONST;
     setPinValue(GREEN_LED, 1);
     return(temp);
@@ -211,15 +219,15 @@ uint32_t measCap(){
 
 uint32_t measInd(){
     groundPins();
-    float ESR = measESR(); //ESR value
-    float t, ind, i = 0;  //initialize time constant,inductance, and current
-    float res_int = ESR + 33; //internal resistance
+    double ESR = measESR(); //ESR value
+    double t, ind, i = 0;  //initialize time constant,inductance, and current
+    double res_int = ESR + 33; //internal resistance
 
     //discharge pins
     setPinValue(MEASURE_C, 1);
     setPinValue(LOWSIDE, 1);
     waitMicrosecond(10e5);
-
+    setPinValue(GREEN_LED, 0);
 
 
     //disable timer and reset TAV
@@ -243,20 +251,30 @@ uint32_t measInd(){
     }
 
     WTIMER1_CTL_R &= ~TIMER_CTL_TAEN;
-
-    t = WTIMER1_TAV_R / 40000000; //time constant = value / system clock
+    double test = WTIMER1_TAV_R;
     i = VREF/ res_int;
-
-    ind = -(res_int * t)/(log(1-(res_int * i)/3.3));
-    //need to test if this works
-
-
-
-
+    t = ((double) (WTIMER1_TAV_R) / 40e6 );
+    ind = -(res_int * t) / (log(1- (res_int * i) / 3.3)) / IND_CONST;
 
     groundPins();
     setPinValue(GREEN_LED,1);
-    return(ind * 1e6);
+    ind = (double) (ind * 1e6);
+
+    //JANK MATH GETS IT
+        if (ind > 70) {
+            groundPins();
+            setPinValue(GREEN_LED,1);
+            return ind + 20;
+        }
+        if (ind <= 35) {
+            groundPins();
+            setPinValue(GREEN_LED,1);
+            return ind - 20;
+        }
+        if (ind > 35 && ind <= 70 ){
+            return ind - 10;
+        }
+
 
 }
 
@@ -279,7 +297,7 @@ void measAuto(){
     }
 
     //check for capacitance by seeing if ind is greater than 200 and resistance less than 10
-    if (ind > 200 && res < 10){
+    if (ind > 200 && res < 100){
         putsUart0("Capacitor: ");
         sprintf(buff, "%d", cap);
         putsUart0(buff);
@@ -289,7 +307,7 @@ void measAuto(){
 
     //check for inductance by seeing if capacitance failed
     //and resistance less than 100 (accounts for internal resistance of the inductor
-    if (cap == 0 && res < 10){
+    if (cap == 0 && res < 100){
         putsUart0("Inductor: ");
         sprintf(buff, "%d", ind);
         putsUart0(buff);

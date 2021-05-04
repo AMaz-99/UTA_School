@@ -26,8 +26,8 @@
 
 void initMeasurements();
 void groundPins();
-float getVoltage();
-float measESR();
+double measVoltage();
+double measESR();
 uint32_t measRes();
 uint32_t measCap();
 uint32_t measInd();

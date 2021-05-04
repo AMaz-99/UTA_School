@@ -127,7 +127,10 @@ void parseLine(INPUT_LINE* data){
 //returns true if the strings match, else returns false
 bool strCmp(const char* s1, const char* s2){
     uint8_t count = 0;
-    while (s1[count] != '\0' || s2[count] != '\0'){
+    while ((s1[count] != '\0') || (s2[count] != '\0')){
+        if ((s1[count] == '\0') || (s2[count] == '\0')) {
+            if (s1[count - 1] == s2[count - 1]) return true;
+        }
         if (s1[count] != s2[count]) return false;
         count++;
     }
