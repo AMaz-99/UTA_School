@@ -13,8 +13,6 @@ terminal.obj: C:/ti/ccs1030/ccs/tools/compiler/ti-cgt-arm_20.2.4.LTS/include/mac
 terminal.obj: C:/ti/ccs1030/ccs/tools/compiler/ti-cgt-arm_20.2.4.LTS/include/sys/_stdint.h
 terminal.obj: C:/ti/ccs1030/ccs/tools/compiler/ti-cgt-arm_20.2.4.LTS/include/stdbool.h
 terminal.obj: C:/ti/ccs1030/ccs/tools/compiler/ti-cgt-arm_20.2.4.LTS/include/string.h
-terminal.obj: C:/ti/ccs1030/ccs/tools/compiler/ti-cgt-arm_20.2.4.LTS/include/ctype.h
-terminal.obj: C:/ti/ccs1030/ccs/tools/compiler/ti-cgt-arm_20.2.4.LTS/include/_isfuncdcl.h
 terminal.obj: ../tm4c123gh6pm.h
 terminal.obj: ../clock.h
 terminal.obj: ../gpio.h
@@ -46,10 +44,6 @@ C:/ti/ccs1030/ccs/tools/compiler/ti-cgt-arm_20.2.4.LTS/include/sys/_stdint.h:
 C:/ti/ccs1030/ccs/tools/compiler/ti-cgt-arm_20.2.4.LTS/include/stdbool.h:
 
 C:/ti/ccs1030/ccs/tools/compiler/ti-cgt-arm_20.2.4.LTS/include/string.h:
-
-C:/ti/ccs1030/ccs/tools/compiler/ti-cgt-arm_20.2.4.LTS/include/ctype.h:
-
-C:/ti/ccs1030/ccs/tools/compiler/ti-cgt-arm_20.2.4.LTS/include/_isfuncdcl.h:
 
 ../tm4c123gh6pm.h:
 

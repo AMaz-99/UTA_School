@@ -17,11 +17,11 @@
 // Device includes, defines, and assembler directives
 //-----------------------------------------------------------------------------
 
-#include "tm4c123gh6pm.h"
 #include <stdint.h>
 #include <stdint.h>
 #include <math.h>
 #include <stdio.h>
+#include "tm4c123gh6pm.h"
 #include "adc0.h"
 #include "measurements.h"
 #include "gpio.h"

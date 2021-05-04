@@ -19,7 +19,6 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <string.h>
-#include <ctype.h>
 #include "tm4c123gh6pm.h"
 #include "clock.h"
 #include "gpio.h"

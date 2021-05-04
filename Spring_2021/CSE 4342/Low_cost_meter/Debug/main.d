@@ -1,7 +1,6 @@
 # FIXED
 
 main.obj: ../main.c
-main.obj: ../tm4c123gh6pm.h
 main.obj: C:/ti/ccs1030/ccs/tools/compiler/ti-cgt-arm_20.2.4.LTS/include/stdint.h
 main.obj: C:/ti/ccs1030/ccs/tools/compiler/ti-cgt-arm_20.2.4.LTS/include/_ti_config.h
 main.obj: C:/ti/ccs1030/ccs/tools/compiler/ti-cgt-arm_20.2.4.LTS/include/linkage.h
@@ -17,6 +16,7 @@ main.obj: C:/ti/ccs1030/ccs/tools/compiler/ti-cgt-arm_20.2.4.LTS/include/_defs.h
 main.obj: C:/ti/ccs1030/ccs/tools/compiler/ti-cgt-arm_20.2.4.LTS/include/machine/_limits.h
 main.obj: C:/ti/ccs1030/ccs/tools/compiler/ti-cgt-arm_20.2.4.LTS/include/stdio.h
 main.obj: C:/ti/ccs1030/ccs/tools/compiler/ti-cgt-arm_20.2.4.LTS/include/stdarg.h
+main.obj: ../tm4c123gh6pm.h
 main.obj: ../adc0.h
 main.obj: ../measurements.h
 main.obj: ../gpio.h
@@ -27,8 +27,6 @@ main.obj: ../clock.h
 main.obj: ../terminal.h
 
 ../main.c:
-
-../tm4c123gh6pm.h:
 
 C:/ti/ccs1030/ccs/tools/compiler/ti-cgt-arm_20.2.4.LTS/include/stdint.h:
 
@@ -59,6 +57,8 @@ C:/ti/ccs1030/ccs/tools/compiler/ti-cgt-arm_20.2.4.LTS/include/machine/_limits.h
 C:/ti/ccs1030/ccs/tools/compiler/ti-cgt-arm_20.2.4.LTS/include/stdio.h:
 
 C:/ti/ccs1030/ccs/tools/compiler/ti-cgt-arm_20.2.4.LTS/include/stdarg.h:
+
+../tm4c123gh6pm.h:
 
 ../adc0.h:
 
