@@ -66,7 +66,7 @@ int main(void){
         putsUart0("\t\r\n\n>");
         getsUart0(&data);
         parseLine(&data);
-        char *cmd = data.buffer[data.argv[0]];
+        char *cmd = &data.buffer[data.argv[0]];
 
 
         //measure commands
@@ -138,13 +138,13 @@ int main(void){
 
         //debug commands
         else if(strCmp(cmd, "reset") || strCmp(cmd, "reboot")){
-            putsUart0("\t\r\Rebooting System:\r\n");
+            putsUart0("\t\r\nRebooting System:\r\n");
             waitMicrosecond(10000);
             resetSys();
         }
 
         else{
-            putsUart0("\t\r\Invalid Command\r\n");
+            putsUart0("\t\r\nInvalid Command:\r\n");
         }
     }
 

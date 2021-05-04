@@ -66,6 +66,7 @@ void getsUart0(INPUT_LINE *data){
             case 8:
             case 127: // checking for backspace
                 count--;
+                putsUart0("\b \b"); // write clear and backspace
                 break;
             case 10:
             case 13: //checking for enter key
@@ -75,6 +76,7 @@ void getsUart0(INPUT_LINE *data){
             case 32: //checking for space
                 data->buffer[count] = c;
                 count++;
+                putcUart0(c);
                 break;
             default:
                 //convert to lowercase if uppercase
@@ -156,23 +158,23 @@ void printMenu(){
 
 //help menu
 void printHelp(){
-    putsUart0("Showing list of available terminal commands:\t\r\n");
+    putsUart0("Showing list of available commands:\t\r\n");
     putsUart0("--------------------------------------------\t\r\n\n");
     putsUart0("Debug Commands:\t\r\n");
     putsUart0("---------------\t\r\n");
-    putsUart0("(1)reset-------------Resets the hardware\t\r\n");
+    putsUart0("(1)reset-------------Resets hardware\t\r\n");
     putsUart0("\t\r\n");
     putsUart0("LCR Commands:\t\r\n");
     putsUart0("-------------\t\r\n");
-    putsUart0("(1)resistor----------Returns the resistance of the DUT\t\r\n");
-    putsUart0("(2)capacitance-------Returns the capacitance of the DUT\t\r\n");
-    putsUart0("(3)inductance--------Returns the inductance of the DUT\t\r\n");
-    putsUart0("(4)esr---------------Returns the ESR of the inductor under test\t\r\n");
+    putsUart0("(1)resistor----------Returns the resistance\t\r\n");
+    putsUart0("(2)capacitance-------Returns the capacitance\t\r\n");
+    putsUart0("(3)inductance--------Returns the inductance\t\r\n");
+    putsUart0("(4)esr---------------Returns the ESR\t\r\n");
     putsUart0("(5)voltage-----------Returns the voltage across DUT2 and DUT1.\t\r\n");
-    putsUart0("(6)auto--------------Returns the value of the DUT that is most predominant\t\r\n");
+    putsUart0("(6)auto--------------Returns the component and component value\t\r\n");
     putsUart0("\t\r\n");
     putsUart0("Terminal Commands: \t\r\n");
     putsUart0("-------------\t\r\n");
-    putsUart0("(1)clear-------------Clears terminal screen\t\r\n");
-    putsUart0("(2)help--------------Shows list of available commands\t\r\n");
+    putsUart0("(1)clear-------------Clears terminal \t\r\n");
+    putsUart0("(2)help--------------Shows list of commands\t\r\n");
 }
