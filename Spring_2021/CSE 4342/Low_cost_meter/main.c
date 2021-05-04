@@ -33,6 +33,10 @@
 
 #define BUFF_LENGTH 100
 
+//LED for testing purposes
+
+
+
 //-----------------------------------------------------------------------------
 // External Functions (extern gets pretty colors for code composer studios)
 //-----------------------------------------------------------------------------
@@ -140,7 +144,7 @@ int main(void){
         }
 
         else{
-            putsUart0("\t\r\Rebooting System:\r\n");
+            putsUart0("\t\r\Invalid Command\r\n");
         }
     }
 
